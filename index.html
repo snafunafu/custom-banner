@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Custom Booth Banner</title>
+
+    <!-- Poppins 폰트 추가 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
 </head>
-<body style="text-align:center; padding:50px; font-family:sans-serif;">
+<body style="text-align:center; padding:50px; font-family:'Poppins', sans-serif;">
 
     <h1>Download Your Booth Banner</h1>
 
@@ -22,18 +25,22 @@
             const canvas = document.getElementById('bannerCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
-            img.src = 'banner.png'; // <- Your banner image here
+            img.src = 'banner.png'; // << 너가 업로드한 배너 파일 이름
+
             img.onload = function() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                // Text style
-                ctx.font = 'bold 80px Poppins';
-                ctx.fillStyle = '#000000'; // white text, you can change
+                // 폰트 스타일 설정 (Poppins, 흰색)
+                ctx.font = '700 30px Poppins';
+                ctx.fillStyle = '#FFFFFF'; // 글자색 흰색
                 ctx.textAlign = 'center';
-                ctx.fillText('Booth ' + boothNumber, canvas.width / 2, canvas.height - 100);
+                ctx.textBaseline = 'middle';
 
-                // Show download link
+                // 부스번호 텍스트 위치 조정 (배너 중간 왼쪽 영역)
+                ctx.fillText('Booth ' + boothNumber, 350, 45);
+
+                // 다운로드 링크 생성
                 const downloadLink = document.getElementById('downloadLink');
                 downloadLink.href = canvas.toDataURL('image/png');
                 downloadLink.download = 'booth-banner.png';
