@@ -17,6 +17,7 @@
             justify-content: center;
             gap: 50px;
             margin-top: 30px;
+            flex-wrap: wrap;
         }
         .preview-box {
             text-align: center;
@@ -27,9 +28,10 @@
             border: 1px solid #ccc;
         }
         #banner2Canvas {
-            width: 360px;
-            height: 360px;
+            width: 1080px;
+            height: 1080px;
             border: 1px solid #ccc;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -109,11 +111,11 @@
             ctx2.textAlign = 'center';
             ctx2.textBaseline = 'middle';
 
-            ctx2.font = '700 60px Poppins'; // 첫 줄 더 크게!
-            ctx2.fillText('Visit us at our booth', 810, 440);
+            ctx2.font = '700 80px Poppins'; // 첫 줄 폰트 크게
+            ctx2.fillText('Visit us at our booth', 810, 420);
 
-            ctx2.font = '700 100px Poppins'; // 부스 번호도 더 크게!!
-            ctx2.fillText(boothNumber, 810, 540);
+            ctx2.font = '700 140px Poppins'; // 부스번호 폰트 엄청 크게
+            ctx2.fillText(boothNumber, 810, 560);
 
             const downloadLink2 = document.getElementById('downloadLink2');
             downloadLink2.href = canvas2.toDataURL('image/png');
