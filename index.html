@@ -6,6 +6,14 @@
 
     <!-- Poppins 폰트 추가 -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* 캔버스 크기를 실제 사이즈에 딱 맞게 */
+        #bannerCanvas {
+            width: 728px;
+            height: 90px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body style="text-align:center; padding:50px; font-family:'Poppins', sans-serif;">
 
@@ -16,14 +24,14 @@
     <button onclick="generateBanner()" style="padding:10px 20px; font-size:16px;">Generate Banner</button>
     <br><br>
 
-    <!-- 여기! 미리보기용 캔버스 -->
+    <!-- 미리보기 -->
     <div style="margin-top:30px;">
         <h3>Preview:</h3>
-        <canvas id="bannerCanvas" width="728" height="90" style="border:1px solid #ccc;"></canvas>
+        <canvas id="bannerCanvas" width="728" height="90"></canvas>
     </div>
     <br>
 
-    <!-- 다운로드 버튼 -->
+    <!-- 다운로드 링크 -->
     <a id="downloadLink" style="display:none; padding:10px 20px; background-color:#4CAF50; color:white; text-decoration:none;">Download Your Banner</a>
 
     <script>
@@ -38,21 +46,17 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                // 폰트 로딩이 끝난 후 글자 그리기
                 document.fonts.ready.then(function() {
                     ctx.fillStyle = '#FFFFFF';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
 
-                    // 첫 줄: "Visit our booth at"
                     ctx.font = '700 20px Poppins';
                     ctx.fillText('Visit our booth at', 350, 30);
 
-                    // 둘째 줄: Booth 번호
                     ctx.font = '700 30px Poppins';
                     ctx.fillText(boothNumber, 350, 65);
 
-                    // 다운로드 링크 생성
                     const downloadLink = document.getElementById('downloadLink');
                     downloadLink.href = canvas.toDataURL('image/png');
                     downloadLink.download = 'booth-banner.png';
