@@ -106,14 +106,14 @@
 
             // 두 번째 배너 텍스트 (1080x1080)
             ctx2.fillStyle = '#FFFFFF';
-            ctx2.textAlign = 'center';
+            ctx2.textAlign = 'right';  // 👉 오른쪽 정렬
             ctx2.textBaseline = 'middle';
 
-            ctx2.font = '700 48px Poppins'; // 첫 줄 더 크게!
-            ctx2.fillText('Visit us at our booth', 810, 440);
+            ctx2.font = '700 80px Poppins';
+            ctx2.fillText('Visit us', 960, 440); // 초록 박스 안쪽 80%쯤
 
-            ctx2.font = '700 70px Poppins'; // 부스 번호도 더 크게!!
-            ctx2.fillText(boothNumber, 810, 540);
+            ctx2.font = '700 100px Poppins';
+            ctx2.fillText('Booth ' + boothNumber, 960, 560); // 초록 박스 안쪽 80%쯤
 
             const downloadLink2 = document.getElementById('downloadLink2');
             downloadLink2.href = canvas2.toDataURL('image/png');
