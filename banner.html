@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Booth Banner</title>
+</head>
+<body style="text-align:center; padding:50px; font-family:sans-serif;">
+
+    <h1>Download Your Booth Banner</h1>
+
+    <input type="text" id="boothInput" placeholder="Enter Booth Number" style="padding:10px; font-size:16px;">
+    <br><br>
+    <button onclick="generateBanner()" style="padding:10px 20px; font-size:16px;">Generate Banner</button>
+    <br><br>
+    <canvas id="bannerCanvas" width="1200" height="600" style="border:1px solid #ccc; display:none;"></canvas>
+    <br><br>
+    <a id="downloadLink" style="display:none; padding:10px 20px; background-color:#4CAF50; color:white; text-decoration:none;">Download Your Banner</a>
+
+    <script>
+        function generateBanner() {
+            const boothNumber = document.getElementById('boothInput').value;
+            const canvas = document.getElementById('bannerCanvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.src = 'your-banner-background.png'; // <- Your banner image here
+            img.onload = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                // Text style
+                ctx.font = 'bold 80px Arial';
+                ctx.fillStyle = '#FF0000'; // Red text, you can change
+                ctx.textAlign = 'center';
+                ctx.fillText('Booth ' + boothNumber, canvas.width / 2, canvas.height - 100);
+
+                // Show download link
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = canvas.toDataURL('image/png');
+                downloadLink.download = 'booth-banner.png';
+                downloadLink.style.display = 'inline-block';
+            }
+        }
+    </script>
+
+</body>
+</html>
