@@ -76,8 +76,8 @@
             const ctx2 = canvas2.getContext('2d');
 
             const [img1, img2] = await Promise.all([
-                loadImage('banner.png'),
-                loadImage('banner-2.png')
+                loadImage('banner.png'),     // 728x90 배너
+                loadImage('banner-2.png')     // 1080x1080 배너
             ]);
 
             ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
@@ -106,14 +106,16 @@
 
             // 두 번째 배너 텍스트 (1080x1080)
             ctx2.fillStyle = '#FFFFFF';
-            ctx2.textAlign = 'right';  // 👉 오른쪽 정렬
+            ctx2.textAlign = 'right';  // 오른쪽 정렬
             ctx2.textBaseline = 'middle';
 
+            const textX = 1000; // 오른쪽 끝(1080px)에서 80px 여백
+
             ctx2.font = '700 80px Poppins';
-            ctx2.fillText('Visit us', 960, 440); // 초록 박스 안쪽 80%쯤
+            ctx2.fillText('Visit us', textX, 440);
 
             ctx2.font = '700 100px Poppins';
-            ctx2.fillText('Booth ' + boothNumber, 960, 560); // 초록 박스 안쪽 80%쯤
+            ctx2.fillText('Booth ' + boothNumber, textX, 560);
 
             const downloadLink2 = document.getElementById('downloadLink2');
             downloadLink2.href = canvas2.toDataURL('image/png');
