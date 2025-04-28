@@ -31,27 +31,34 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                // 폰트 스타일 설정 (Poppins, 흰색)
-                ctx.fillStyle = '#FFFFFF';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
+                // 폰트 적용 완료를 보장하는 작은 트릭
+                document.fonts.ready.then(function() {
 
-                // 첫 줄: "Visit our booth at"
-                ctx.font = '700 20px Poppins';
-                ctx.fillText('Visit our booth at', 350, 35); // 약간 위쪽에
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
 
-                // 둘째 줄: Booth 번호
-                ctx.font = '700 30px Poppins';
-                ctx.fillText(boothNumber, 350, 65); // 약간 아래쪽에
-                // (45가 중앙이니까 35 위, 65 아래)
+                    // 첫 줄: "Visit our booth at"
+                    ctx.font = '700 20px Poppins';
+                    ctx.fillText('Visit our booth at', 350, 30); // 위에 살짝 배치
 
-                // 다운로드 링크 생성
-                const downloadLink = document.getElementById('downloadLink');
-                downloadLink.href = canvas.toDataURL('image/png');
-                downloadLink.download = 'booth-banner.png';
-                downloadLink.style.display = 'inline-block';
+                    // 둘째 줄: Booth 번호
+                    ctx.font = '700 30px Poppins';
+                    ctx.fillText(boothNumber, 350, 65); // 아래에 크게 배치
+
+                    // 다운로드 링크 생성
+                    const downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = canvas.toDataURL('image/png');
+                    downloadLink.download = 'booth-banner.png';
+                    downloadLink.style.display = 'inline-block';
+
+                });
             }
         }
+    </script>
+
+</body>
+</html>
     </script>
 
 </body>
