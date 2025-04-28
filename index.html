@@ -25,20 +25,25 @@
             const canvas = document.getElementById('bannerCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
-            img.src = 'banner.png'; // << 너가 업로드한 배너 파일 이름
+            img.src = 'banner.png'; // 배너 파일 이름
 
             img.onload = function() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
                 // 폰트 스타일 설정 (Poppins, 흰색)
-                ctx.font = '700 30px Poppins';
-                ctx.fillStyle = '#FFFFFF'; // 글자색 흰색
+                ctx.fillStyle = '#FFFFFF';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
-                // 부스번호 텍스트 위치 조정 (배너 중간 왼쪽 영역)
-                ctx.fillText('Booth ' + boothNumber, 350, 45);
+                // 첫 줄: "Visit our booth at"
+                ctx.font = '700 20px Poppins';
+                ctx.fillText('Visit our booth at', 350, 35); // 약간 위쪽에
+
+                // 둘째 줄: Booth 번호
+                ctx.font = '700 30px Poppins';
+                ctx.fillText(boothNumber, 350, 65); // 약간 아래쪽에
+                // (45가 중앙이니까 35 위, 65 아래)
 
                 // 다운로드 링크 생성
                 const downloadLink = document.getElementById('downloadLink');
