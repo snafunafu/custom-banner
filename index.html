@@ -15,8 +15,15 @@
     <br><br>
     <button onclick="generateBanner()" style="padding:10px 20px; font-size:16px;">Generate Banner</button>
     <br><br>
-    <canvas id="bannerCanvas" width="728" height="90" style="border:1px solid #ccc; display:none;"></canvas>
-    <br><br>
+
+    <!-- 여기! 미리보기용 캔버스 -->
+    <div style="margin-top:30px;">
+        <h3>Preview:</h3>
+        <canvas id="bannerCanvas" width="728" height="90" style="border:1px solid #ccc;"></canvas>
+    </div>
+    <br>
+
+    <!-- 다운로드 버튼 -->
     <a id="downloadLink" style="display:none; padding:10px 20px; background-color:#4CAF50; color:white; text-decoration:none;">Download Your Banner</a>
 
     <script>
@@ -31,34 +38,28 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                // 폰트 적용 완료를 보장하는 작은 트릭
+                // 폰트 로딩이 끝난 후 글자 그리기
                 document.fonts.ready.then(function() {
-
                     ctx.fillStyle = '#FFFFFF';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
 
                     // 첫 줄: "Visit our booth at"
                     ctx.font = '700 20px Poppins';
-                    ctx.fillText('Visit our booth at', 350, 30); // 위에 살짝 배치
+                    ctx.fillText('Visit our booth at', 350, 30);
 
                     // 둘째 줄: Booth 번호
                     ctx.font = '700 30px Poppins';
-                    ctx.fillText(boothNumber, 350, 65); // 아래에 크게 배치
+                    ctx.fillText(boothNumber, 350, 65);
 
                     // 다운로드 링크 생성
                     const downloadLink = document.getElementById('downloadLink');
                     downloadLink.href = canvas.toDataURL('image/png');
                     downloadLink.download = 'booth-banner.png';
                     downloadLink.style.display = 'inline-block';
-
                 });
             }
         }
-    </script>
-
-</body>
-</html>
     </script>
 
 </body>
