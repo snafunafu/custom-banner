@@ -27,7 +27,7 @@
             border: 1px solid #ccc;
         }
         #banner2Canvas {
-            width: 360px; /* 1080px 미리보기는 작게 */
+            width: 360px;
             height: 360px;
             border: 1px solid #ccc;
         }
@@ -60,64 +60,65 @@
     </div>
 
     <script>
-        function generateBanners() {
-            const boothNumber = document.getElementById('boothInput').value;
+        function loadImage(src) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = src;
+                img.onload = () => resolve(img);
+            });
+        }
 
-            // 첫 번째 배너
+        async function generateBanners() {
+            const boothNumber = document.getElementById('boothInput').value;
             const canvas1 = document.getElementById('bannerCanvas');
             const ctx1 = canvas1.getContext('2d');
-            const img1 = new Image();
-            img1.src = 'banner.png'; // 첫 번째 배너 파일 (728x90)
-
-            img1.onload = function() {
-                ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-                ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
-
-                document.fonts.ready.then(function() {
-                    ctx1.fillStyle = '#FFFFFF';
-                    ctx1.textAlign = 'center';
-                    ctx1.textBaseline = 'middle';
-
-                    ctx1.font = '700 20px Poppins';
-                    ctx1.fillText('Visit our booth at', canvas1.width / 2, 30);
-
-                    ctx1.font = '700 30px Poppins';
-                    ctx1.fillText(boothNumber, canvas1.width / 2, 65);
-
-                    const downloadLink1 = document.getElementById('downloadLink1');
-                    downloadLink1.href = canvas1.toDataURL('image/png');
-                    downloadLink1.download = 'booth-banner-1.png';
-                    downloadLink1.style.display = 'inline-block';
-                });
-            };
-
-            // 두 번째 배너
             const canvas2 = document.getElementById('banner2Canvas');
             const ctx2 = canvas2.getContext('2d');
-            const img2 = new Image();
-            img2.src = 'banner-2.png'; // 두 번째 배너 파일 (1080x1080)
 
-            img2.onload = function() {
-                ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-                ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
+            const [img1, img2] = await Promise.all([
+                loadImage('banner.png'),
+                loadImage('banner-2.png')
+            ]);
 
-                document.fonts.ready.then(function() {
-                    ctx2.fillStyle = '#FFFFFF';
-                    ctx2.textAlign = 'center';
-                    ctx2.textBaseline = 'middle';
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 
-                    ctx2.font = '700 32px Poppins';
-                    ctx2.fillText('Visit us at our booth', 810, 450);
+            ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
+            ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
 
-                    ctx2.font = '700 50px Poppins';
-                    ctx2.fillText(boothNumber, 810, 530);
+            await document.fonts.ready;
 
-                    const downloadLink2 = document.getElementById('downloadLink2');
-                    downloadLink2.href = canvas2.toDataURL('image/png');
-                    downloadLink2.download = 'booth-banner-2.png';
-                    downloadLink2.style.display = 'inline-block';
-                });
-            };
+            // 첫 번째 배너 텍스트 (728x90)
+            ctx1.fillStyle = '#FFFFFF';
+            ctx1.textAlign = 'center';
+            ctx1.textBaseline = 'middle';
+
+            ctx1.font = '700 20px Poppins';
+            ctx1.fillText('Visit our booth at', canvas1.width / 2, 30);
+
+            ctx1.font = '700 30px Poppins';
+            ctx1.fillText(boothNumber, canvas1.width / 2, 65);
+
+            const downloadLink1 = document.getElementById('downloadLink1');
+            downloadLink1.href = canvas1.toDataURL('image/png');
+            downloadLink1.download = 'booth-banner-1.png';
+            downloadLink1.style.display = 'inline-block';
+
+            // 두 번째 배너 텍스트 (1080x1080)
+            ctx2.fillStyle = '#FFFFFF';
+            ctx2.textAlign = 'center';
+            ctx2.textBaseline = 'middle';
+
+            ctx2.font = '700 48px Poppins'; // 첫 줄 더 크게!
+            ctx2.fillText('Visit us at our booth', 810, 440);
+
+            ctx2.font = '700 70px Poppins'; // 부스 번호도 더 크게!!
+            ctx2.fillText(boothNumber, 810, 540);
+
+            const downloadLink2 = document.getElementById('downloadLink2');
+            downloadLink2.href = canvas2.toDataURL('image/png');
+            downloadLink2.download = 'booth-banner-2.png';
+            downloadLink2.style.display = 'inline-block';
         }
     </script>
 
