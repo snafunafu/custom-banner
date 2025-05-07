@@ -181,15 +181,17 @@
       ctx.fillText('Booth ' + boothNumber, 980, 500);
     }
 
-    function drawSquareHi(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 90px "Nunito Sans", sans-serif';
-      ctx.fillText('VISIT US AT', 100, 160);
-      ctx.font = '700 120px "Nunito Sans", sans-serif';
-      ctx.fillText('Booth ' + boothNumber, 100, 260);
-    }
+function drawSquareHi(ctx, canvas, boothNumber) {
+  ctx.fillStyle = '#FFFFFF';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+
+  ctx.font = '700 90px "Nunito Sans", sans-serif';
+  ctx.fillText('VISIT US AT', 75, 140);
+
+  ctx.font = '700 120px "Nunito Sans", sans-serif';
+  ctx.fillText('Booth ' + boothNumber, 75, 230);
+}
   </script>
 
 </body>
