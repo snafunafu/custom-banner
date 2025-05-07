@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -101,18 +100,20 @@
       ctx.fillStyle = "#FFFFFF";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = "700 28px 'Noto Sans KR'";
-      ctx.fillText("부스를 방문해주세요!", canvas.width / 2, 55);
+      ctx.font = "700 20px 'Noto Sans KR'";
+      ctx.fillText("부스를 방문해주세요!", canvas.width / 2, 30);
+      ctx.font = "700 30px 'Noto Sans KR'";
+      ctx.fillText(booth, canvas.width / 2, 65);
     }
 
     function drawSquareKr(ctx, canvas, booth) {
       ctx.fillStyle = "#FFFFFF";
-      ctx.textAlign = "left";
+      ctx.textAlign = "right";
       ctx.textBaseline = "middle";
-      ctx.font = "700 90px 'Noto Sans KR'";
-      ctx.fillText("부스를 방문해주세요!", 75, 140);
-      ctx.font = "700 120px 'Noto Sans KR'";
-      ctx.fillText("Booth " + booth, 75, 245);
+      ctx.font = "700 80px 'Noto Sans KR'";
+      ctx.fillText("부스를 방문해주세요!", 980, 440);
+      ctx.font = "700 100px 'Noto Sans KR'";
+      ctx.fillText("Booth " + booth, 980, 560);
     }
   </script>
 </body>
