@@ -10,9 +10,9 @@
     body { text-align: center; padding: 50px; font-family: 'Poppins', sans-serif; }
     .banner-set { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-bottom: 60px; }
     .column-set { display: flex; flex-direction: column; gap: 30px; }
-    .preview-box { text-align: center; }
+    .preview-box { text-align: center; width: 240px; }
     canvas { border: 1px solid #ccc; margin-bottom: 10px; }
-    canvas.square { width: 324px; height: 324px; }
+    canvas.square { width: 240px; height: 240px; }  /* resized from 324px */
     canvas.wide { width: 728px; height: 90px; }
     h3 { font-size: 18px; margin-bottom: 8px; }
     h3 a { font-size: 16px; margin-left: 10px; color: #4CAF50; text-decoration: underline; cursor: pointer; display: none; }
@@ -23,15 +23,14 @@
   <input type="text" id="boothInput" placeholder="부스 번호 입력" style="padding:10px; font-size:16px;">
   <br><br>
   <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
-
   <div id="previewContainer"></div>
 
   <script>
     const sets = [
-      { name: 'CPHI', font: 'Poppins' },
-      { name: 'bioLIVE', font: 'Poppins' },
-      { name: 'PMEC', font: 'Poppins' },
-      { name: 'Hi Korea', font: '"Nunito Sans"' }
+      { name: 'CPHI', font: 'Poppins', base: 'cphi' },
+      { name: 'bioLIVE', font: 'Poppins', base: 'bio' },
+      { name: 'PMEC', font: 'Poppins', base: 'pmec' },
+      { name: 'Hi Korea', font: '"Nunito Sans"', base: 'hi' }
     ];
 
     const previewContainer = document.getElementById('previewContainer');
@@ -65,10 +64,10 @@
 
       const images = await Promise.all(
         sets.flatMap(set => [
-          loadImage(set.name.toLowerCase().replace(' ', '-') + '-banner2-en.png'),
-          loadImage(set.name.toLowerCase().replace(' ', '-') + '-banner1-en.png'),
-          loadImage(set.name.toLowerCase().replace(' ', '-') + '-banner2-kr.png'),
-          loadImage(set.name.toLowerCase().replace(' ', '-') + '-banner1-kr.png')
+          loadImage(set.base + '-banner2-en.png'),
+          loadImage(set.base + '-banner1-en.png'),
+          loadImage(set.base + '-banner2-kr.png'),
+          loadImage(set.base + '-banner1-kr.png')
         ])
       );
 
@@ -107,7 +106,7 @@
           const canvas = document.getElementById('canvas' + (i * 4 + j));
           const link = document.getElementById('downloadLink' + (i * 4 + j));
           link.href = canvas.toDataURL();
-          link.download = set.name.replace(" ", "_").toLowerCase() + '-' + j + '.png';
+          link.download = set.base + '-' + j + '.png';
           link.style.display = 'inline';
         }
       });
@@ -134,11 +133,7 @@
       ctx.font = `700 80px ${font}`;
       ctx.fillText(lang === 'en' ? "Visit us" : "방문해주세요!", 980, 440);
       ctx.font = `700 100px ${font}`;
-      if (lang === 'en') {
-        ctx.fillText("Booth " + booth, 980, 560);
-      } else {
-        ctx.fillText("Booth " + booth, 980, 560); // 여전히 booth 표시 유지
-      }
+      ctx.fillText("Booth " + booth, 980, 560);
     }
   </script>
 </body>
