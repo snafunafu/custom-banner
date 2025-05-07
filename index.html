@@ -176,15 +176,17 @@
       ctx.fillText('Booth ' + boothNumber, 980, 500);
     }
 
-    function drawSquareHi(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 80px Poppins';
-      ctx.fillText('VISIT US AT', 100, 280);
-      ctx.font = '700 110px Poppins';
-      ctx.fillText('Booth ' + boothNumber, 100, 380);
-    }
+function drawSquareHi(ctx, canvas, boothNumber) {
+  ctx.fillStyle = '#FFFFFF';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+
+  ctx.font = '700 80px Poppins';
+  ctx.fillText('VISIT US AT', 100, 180);
+
+  ctx.font = '700 110px Poppins';
+  ctx.fillText('Booth ' + boothNumber, 100, 280);
+}
   </script>
 
 </body>
