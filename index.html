@@ -24,11 +24,11 @@
       border: 1px solid #ccc;
       margin-bottom: 10px;
     }
-    #bannerCanvas, #banner3Canvas {
+    #bannerCanvas, #banner3Canvas, #banner5Canvas {
       width: 728px;
       height: 90px;
     }
-    #banner2Canvas, #banner4Canvas {
+    #banner2Canvas, #banner4Canvas, #banner6Canvas {
       width: 540px;
       height: 540px;
     }
@@ -85,6 +85,22 @@
       </h3>
       <canvas id="banner4Canvas" width="1080" height="1080"></canvas>
     </div>
+
+    <!-- 세트 3 - PMEC -->
+    <div class="preview-box">
+      <h3>
+        PMEC Banner (728x90)
+        <a id="downloadLink5" download>Download</a>
+      </h3>
+      <canvas id="banner5Canvas" width="728" height="90"></canvas>
+    </div>
+    <div class="preview-box">
+      <h3>
+        PMEC Banner (1080x1080)
+        <a id="downloadLink6" download>Download</a>
+      </h3>
+      <canvas id="banner6Canvas" width="1080" height="1080"></canvas>
+    </div>
   </div>
 
   <script>
@@ -99,18 +115,22 @@
     async function generateBanners() {
       const boothNumber = document.getElementById('boothInput').value;
 
-      const [img1, img2, img3, img4] = await Promise.all([
-        loadImage('cphi-banner2-en.png'), // CPHI 가로
-        loadImage('cphi-banner1-en.png'), // CPHI 정사각
-        loadImage('bio-banner2-en.png'),  // bio 가로
-        loadImage('bio-banner1-en.png')   // bio 정사각
+      const [img1, img2, img3, img4, img5, img6] = await Promise.all([
+        loadImage('cphi-banner2-en.png'),
+        loadImage('cphi-banner1-en.png'),
+        loadImage('bio-banner2-en.png'),
+        loadImage('bio-banner1-en.png'),
+        loadImage('pmec-banner2-en.png'),
+        loadImage('pmec-banner1-en.png')
       ]);
 
       const canvases = [
-        { id: 'bannerCanvas', image: img1, draw: drawCphiWide },
-        { id: 'banner2Canvas', image: img2, draw: drawCphiSquare },
-        { id: 'banner3Canvas', image: img3, draw: drawCphiWide },
-        { id: 'banner4Canvas', image: img4, draw: drawBioSquare }
+        { id: 'bannerCanvas', image: img1, draw: drawWideBanner },
+        { id: 'banner2Canvas', image: img2, draw: drawSquareBannerRight },
+        { id: 'banner3Canvas', image: img3, draw: drawWideBanner },
+        { id: 'banner4Canvas', image: img4, draw: drawSquareBannerBio },
+        { id: 'banner5Canvas', image: img5, draw: drawWideBanner },
+        { id: 'banner6Canvas', image: img6, draw: drawSquareBannerRight }
       ];
 
       await document.fonts.ready;
@@ -129,8 +149,7 @@
       });
     }
 
-    // 가로형 공통 텍스트
-    function drawCphiWide(ctx, canvas, boothNumber) {
+    function drawWideBanner(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -140,8 +159,7 @@
       ctx.fillText(boothNumber, canvas.width / 2, 65);
     }
 
-    // CPHI 정사각
-    function drawCphiSquare(ctx, canvas, boothNumber) {
+    function drawSquareBannerRight(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
@@ -151,8 +169,7 @@
       ctx.fillText('Booth ' + boothNumber, 980, 560);
     }
 
-    // bioLIVE 정사각 (개선된 오른쪽 정렬 + 두 줄)
-    function drawBioSquare(ctx, canvas, boothNumber) {
+    function drawSquareBannerBio(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
