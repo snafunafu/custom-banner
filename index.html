@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -81,7 +82,7 @@
     function loadImage(src) {
       return new Promise(resolve => {
         const img = new Image();
-        img.src = './' + src;
+        img.src = 'https://snafunafu.github.io/custom-banner/' + src;
         img.onload = () => resolve(img);
       });
     }
@@ -138,5 +139,6 @@
   </script>
 </body>
 </html>
+
 
 
