@@ -8,14 +8,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
   <style>
     body { text-align: center; padding: 50px; font-family: 'Poppins', sans-serif; }
-    .banner-set { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-bottom: 60px; }
-    .column-set { display: flex; flex-direction: column; gap: 30px; }
-    .preview-box { text-align: center; width: 240px; }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      justify-items: center;
+      margin-top: 50px;
+    }
+    .preview-box { text-align: center; width: 250px; display: flex; flex-direction: column; align-items: center; min-height: 340px; justify-content: flex-start; }
     canvas { border: 1px solid #ccc; margin-bottom: 10px; }
-    canvas.square { width: 240px; height: 240px; }  /* resized from 324px */
-    canvas.wide { width: 728px; height: 90px; }
-    h3 { font-size: 18px; margin-bottom: 8px; }
-    h3 a { font-size: 16px; margin-left: 10px; color: #4CAF50; text-decoration: underline; cursor: pointer; display: none; }
+    canvas.square { width: 200px; height: 200px; }
+    canvas.wide { width: 250px; height: 31px; }
+    h3 { font-size: 16px; margin-bottom: 6px; }
+    h3 a { font-size: 14px; margin-left: 8px; color: #4CAF50; text-decoration: underline; cursor: pointer; display: none; }
   </style>
 </head>
 <body>
@@ -23,7 +28,7 @@
   <input type="text" id="boothInput" placeholder="부스 번호 입력" style="padding:10px; font-size:16px;">
   <br><br>
   <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
-  <div id="previewContainer"></div>
+  <div id="previewContainer" class="preview-grid"></div>
 
   <script>
     const sets = [
@@ -37,29 +42,24 @@
 
     window.onload = async function () {
       sets.forEach((set, i) => {
-        const group = document.createElement('div');
-        group.className = 'banner-set';
-        group.innerHTML = `
-          <div class="column-set">
-            <div class="preview-box">
-              <h3>${set.name} (728x90)<a id="downloadLink${i*4+1}">Download</a></h3>
-              <canvas class="wide" id="canvas${i*4+1}" width="728" height="90"></canvas>
-            </div>
-            <div class="preview-box">
-              <h3>${set.name} 국문 (728x90)<a id="downloadLink${i*4+3}">Download</a></h3>
-              <canvas class="wide" id="canvas${i*4+3}" width="728" height="90"></canvas>
-            </div>
+        previewContainer.innerHTML += `
+          <div class="preview-box">
+            <h3>${set.name} (728x90)<a id="downloadLink${i*4+1}">Download</a></h3>
+            <canvas class="wide" id="canvas${i*4+1}" width="728" height="90"></canvas>
           </div>
           <div class="preview-box">
             <h3>${set.name} (1080x1080)<a id="downloadLink${i*4+2}">Download</a></h3>
             <canvas class="square" id="canvas${i*4+2}" width="1080" height="1080"></canvas>
           </div>
           <div class="preview-box">
+            <h3>${set.name} 국문 (728x90)<a id="downloadLink${i*4+3}">Download</a></h3>
+            <canvas class="wide" id="canvas${i*4+3}" width="728" height="90"></canvas>
+          </div>
+          <div class="preview-box">
             <h3>${set.name} 국문 (1080x1080)<a id="downloadLink${i*4+4}">Download</a></h3>
             <canvas class="square" id="canvas${i*4+4}" width="1080" height="1080"></canvas>
           </div>
         `;
-        previewContainer.appendChild(group);
       });
 
       const images = await Promise.all(
@@ -138,4 +138,5 @@
   </script>
 </body>
 </html>
+
 
