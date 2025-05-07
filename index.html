@@ -32,6 +32,18 @@
       width: 540px;
       height: 540px;
     }
+    h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    h3 a {
+      font-size: 16px;
+      margin-left: 10px;
+      color: #4CAF50;
+      text-decoration: underline;
+      cursor: pointer;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -44,26 +56,34 @@
   <div class="preview-container">
     <!-- 세트 1 - CPHI -->
     <div class="preview-box">
-      <h3>CPHI Banner (728x90)</h3>
+      <h3>
+        CPHI Banner (728x90)
+        <a id="downloadLink1" download>Download</a>
+      </h3>
       <canvas id="bannerCanvas" width="728" height="90"></canvas>
-      <a id="downloadLink1">Download CPHI Wide</a>
     </div>
     <div class="preview-box">
-      <h3>CPHI Banner (1080x1080)</h3>
+      <h3>
+        CPHI Banner (1080x1080)
+        <a id="downloadLink2" download>Download</a>
+      </h3>
       <canvas id="banner2Canvas" width="1080" height="1080"></canvas>
-      <a id="downloadLink2">Download CPHI Square</a>
     </div>
 
-    <!-- 세트 2 - BIO -->
+    <!-- 세트 2 - bioLIVE -->
     <div class="preview-box">
-      <h3>bioLIVE Banner (728x90)</h3>
+      <h3>
+        bioLIVE Banner (728x90)
+        <a id="downloadLink3" download>Download</a>
+      </h3>
       <canvas id="banner3Canvas" width="728" height="90"></canvas>
-      <a id="downloadLink3">Download bioLIVE Wide</a>
     </div>
     <div class="preview-box">
-      <h3>bioLIVE Banner (1080x1080)</h3>
+      <h3>
+        bioLIVE Banner (1080x1080)
+        <a id="downloadLink4" download>Download</a>
+      </h3>
       <canvas id="banner4Canvas" width="1080" height="1080"></canvas>
-      <a id="downloadLink4">Download bioLIVE Square</a>
     </div>
   </div>
 
@@ -82,14 +102,14 @@
       const [img1, img2, img3, img4] = await Promise.all([
         loadImage('cphi-banner2-en.png'), // CPHI 가로
         loadImage('cphi-banner1-en.png'), // CPHI 정사각
-        loadImage('bio-banner2-en.png'),  // BIO 가로
-        loadImage('bio-banner1-en.png')   // BIO 정사각
+        loadImage('bio-banner2-en.png'),  // bio 가로
+        loadImage('bio-banner1-en.png')   // bio 정사각
       ]);
 
       const canvases = [
         { id: 'bannerCanvas', image: img1, draw: drawCphiWide },
         { id: 'banner2Canvas', image: img2, draw: drawCphiSquare },
-        { id: 'banner3Canvas', image: img3, draw: drawCphiWide }, // bio도 동일한 위치
+        { id: 'banner3Canvas', image: img3, draw: drawCphiWide },
         { id: 'banner4Canvas', image: img4, draw: drawBioSquare }
       ];
 
@@ -102,50 +122,44 @@
         ctx.drawImage(c.image, 0, 0, canvas.width, canvas.height);
         c.draw(ctx, canvas, boothNumber);
 
-        const downloadLink = document.getElementById(`downloadLink${index + 1}`);
-        downloadLink.href = canvas.toDataURL('image/png');
-        downloadLink.download = `booth-banner-${index + 1}.png`;
-        downloadLink.style.display = 'inline-block';
+        const link = document.getElementById(`downloadLink${index + 1}`);
+        link.href = canvas.toDataURL('image/png');
+        link.download = `booth-banner-${index + 1}.png`;
+        link.style.display = 'inline';
       });
     }
 
-    // 공통 가로형 텍스트
+    // 가로형 공통 텍스트
     function drawCphiWide(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-
       ctx.font = '700 20px Poppins';
       ctx.fillText('Visit our booth at', canvas.width / 2, 30);
-
       ctx.font = '700 30px Poppins';
       ctx.fillText(boothNumber, canvas.width / 2, 65);
     }
 
-    // CPHI 정사각형
+    // CPHI 정사각
     function drawCphiSquare(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
-
       ctx.font = '700 80px Poppins';
       ctx.fillText('Visit us', 980, 440);
-
       ctx.font = '700 100px Poppins';
       ctx.fillText('Booth ' + boothNumber, 980, 560);
     }
 
-    // BIO 정사각형
+    // bioLIVE 정사각 (개선된 오른쪽 정렬 + 두 줄)
     function drawBioSquare(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'center';
+      ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
-
-      ctx.font = '700 60px Poppins';
-      ctx.fillText('VISIT US AT Booth', canvas.width / 2, 420);
-
-      ctx.font = '700 110px Poppins';
-      ctx.fillText(boothNumber, canvas.width / 2, 510);
+      ctx.font = '700 80px Poppins';
+      ctx.fillText('Visit us', 980, 400);
+      ctx.font = '700 100px Poppins';
+      ctx.fillText('Booth ' + boothNumber, 980, 500);
     }
   </script>
 
