@@ -1,128 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Custom Booth Banners</title>
-
-    <!-- Poppins 폰트 추가 -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            text-align: center;
-            padding: 50px;
-            font-family: 'Poppins', sans-serif;
-        }
-        .preview-container {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 30px;
-        }
-        .preview-box {
-            text-align: center;
-        }
-        #bannerCanvas {
-            width: 728px;
-            height: 90px;
-            border: 1px solid #ccc;
-        }
-        #banner2Canvas {
-            width: 360px;
-            height: 360px;
-            border: 1px solid #ccc;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Custom Booth Banners</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      text-align: center;
+      padding: 50px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .preview-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .preview-box {
+      text-align: center;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    #bannerCanvas, #banner3Canvas {
+      width: 728px;
+      height: 90px;
+    }
+    #banner2Canvas, #banner4Canvas {
+      width: 540px;
+      height: 540px;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Download Your Booth Banners</h1>
+  <h1>Download Your Booth Banners</h1>
+  <input type="text" id="boothInput" placeholder="Enter Booth Number" style="padding:10px; font-size:16px;">
+  <br><br>
+  <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
 
-    <input type="text" id="boothInput" placeholder="Enter Booth Number" style="padding:10px; font-size:16px;">
-    <br><br>
-    <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate Banners</button>
-
-    <div class="preview-container">
-        <!-- 첫 번째 배너 (728x90) -->
-        <div class="preview-box">
-            <h3>Banner 1 (728x90)</h3>
-            <canvas id="bannerCanvas" width="728" height="90"></canvas>
-            <br><br>
-            <a id="downloadLink1" style="display:none; padding:10px 20px; background-color:#4CAF50; color:white; text-decoration:none;">Download Banner 1</a>
-        </div>
-
-        <!-- 두 번째 배너 (1080x1080) -->
-        <div class="preview-box">
-            <h3>Banner 2 (1080x1080)</h3>
-            <canvas id="banner2Canvas" width="1080" height="1080"></canvas>
-            <br><br>
-            <a id="downloadLink2" style="display:none; padding:10px 20px; background-color:#4CAF50; color:white; text-decoration:none;">Download Banner 2</a>
-        </div>
+  <div class="preview-container">
+    <!-- 세트 1 - CPHI -->
+    <div class="preview-box">
+      <h3>CPHI Banner (728x90)</h3>
+      <canvas id="bannerCanvas" width="728" height="90"></canvas>
+      <a id="downloadLink1">Download CPHI Wide</a>
+    </div>
+    <div class="preview-box">
+      <h3>CPHI Banner (1080x1080)</h3>
+      <canvas id="banner2Canvas" width="1080" height="1080"></canvas>
+      <a id="downloadLink2">Download CPHI Square</a>
     </div>
 
-    <script>
-        function loadImage(src) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.src = src;
-                img.onload = () => resolve(img);
-            });
-        }
+    <!-- 세트 2 - BIO -->
+    <div class="preview-box">
+      <h3>bioLIVE Banner (728x90)</h3>
+      <canvas id="banner3Canvas" width="728" height="90"></canvas>
+      <a id="downloadLink3">Download bioLIVE Wide</a>
+    </div>
+    <div class="preview-box">
+      <h3>bioLIVE Banner (1080x1080)</h3>
+      <canvas id="banner4Canvas" width="1080" height="1080"></canvas>
+      <a id="downloadLink4">Download bioLIVE Square</a>
+    </div>
+  </div>
 
-        async function generateBanners() {
-            const boothNumber = document.getElementById('boothInput').value;
-            const canvas1 = document.getElementById('bannerCanvas');
-            const ctx1 = canvas1.getContext('2d');
-            const canvas2 = document.getElementById('banner2Canvas');
-            const ctx2 = canvas2.getContext('2d');
+  <script>
+    function loadImage(src) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => resolve(img);
+      });
+    }
 
-            const [img1, img2] = await Promise.all([
-                loadImage('banner.png'),     // 728x90 배너
-                loadImage('banner-2.png')     // 1080x1080 배너
-            ]);
+    async function generateBanners() {
+      const boothNumber = document.getElementById('boothInput').value;
 
-            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+      const [img1, img2, img3, img4] = await Promise.all([
+        loadImage('cphi-banner2-en.png'), // CPHI 가로
+        loadImage('cphi-banner1-en.png'), // CPHI 정사각
+        loadImage('bio-banner2-en.png'),  // BIO 가로
+        loadImage('bio-banner1-en.png')   // BIO 정사각
+      ]);
 
-            ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
-            ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
+      const canvases = [
+        { id: 'bannerCanvas', image: img1, draw: drawCphiWide },
+        { id: 'banner2Canvas', image: img2, draw: drawCphiSquare },
+        { id: 'banner3Canvas', image: img3, draw: drawCphiWide }, // bio도 동일한 위치
+        { id: 'banner4Canvas', image: img4, draw: drawBioSquare }
+      ];
 
-            await document.fonts.ready;
+      await document.fonts.ready;
 
-            // 첫 번째 배너 텍스트 (728x90)
-            ctx1.fillStyle = '#FFFFFF';
-            ctx1.textAlign = 'center';
-            ctx1.textBaseline = 'middle';
+      canvases.forEach((c, index) => {
+        const canvas = document.getElementById(c.id);
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(c.image, 0, 0, canvas.width, canvas.height);
+        c.draw(ctx, canvas, boothNumber);
 
-            ctx1.font = '700 20px Poppins';
-            ctx1.fillText('Visit our booth at', canvas1.width / 2, 30);
+        const downloadLink = document.getElementById(`downloadLink${index + 1}`);
+        downloadLink.href = canvas.toDataURL('image/png');
+        downloadLink.download = `booth-banner-${index + 1}.png`;
+        downloadLink.style.display = 'inline-block';
+      });
+    }
 
-            ctx1.font = '700 30px Poppins';
-            ctx1.fillText(boothNumber, canvas1.width / 2, 65);
+    // 공통 가로형 텍스트
+    function drawCphiWide(ctx, canvas, boothNumber) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
 
-            const downloadLink1 = document.getElementById('downloadLink1');
-            downloadLink1.href = canvas1.toDataURL('image/png');
-            downloadLink1.download = 'booth-banner-1.png';
-            downloadLink1.style.display = 'inline-block';
+      ctx.font = '700 20px Poppins';
+      ctx.fillText('Visit our booth at', canvas.width / 2, 30);
 
-            // 두 번째 배너 텍스트 (1080x1080)
-            ctx2.fillStyle = '#FFFFFF';
-            ctx2.textAlign = 'right';  // 오른쪽 정렬
-            ctx2.textBaseline = 'middle';
+      ctx.font = '700 30px Poppins';
+      ctx.fillText(boothNumber, canvas.width / 2, 65);
+    }
 
-            const textX = 980; // 오른쪽 끝(1080px)에서 80px 여백
+    // CPHI 정사각형
+    function drawCphiSquare(ctx, canvas, boothNumber) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
 
-            ctx2.font = '700 80px Poppins';
-            ctx2.fillText('Visit us', textX, 440);
+      ctx.font = '700 80px Poppins';
+      ctx.fillText('Visit us', 980, 440);
 
-            ctx2.font = '700 100px Poppins';
-            ctx2.fillText('Booth ' + boothNumber, textX, 560);
+      ctx.font = '700 100px Poppins';
+      ctx.fillText('Booth ' + boothNumber, 980, 560);
+    }
 
-            const downloadLink2 = document.getElementById('downloadLink2');
-            downloadLink2.href = canvas2.toDataURL('image/png');
-            downloadLink2.download = 'booth-banner-2.png';
-            downloadLink2.style.display = 'inline-block';
-        }
-    </script>
+    // BIO 정사각형
+    function drawBioSquare(ctx, canvas, boothNumber) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      ctx.font = '700 60px Poppins';
+      ctx.fillText('VISIT US AT Booth', canvas.width / 2, 420);
+
+      ctx.font = '700 110px Poppins';
+      ctx.fillText(boothNumber, canvas.width / 2, 510);
+    }
+  </script>
 
 </body>
 </html>
