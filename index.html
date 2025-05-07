@@ -1,109 +1,43 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Custom Booth Banners</title>
+  <title>Custom Booth Banners (KR + EN)</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
   <style>
-    body {
-      text-align: center;
-      padding: 50px;
-      font-family: 'Poppins', sans-serif;
-    }
-    .banner-set {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      flex-wrap: wrap;
-      margin-bottom: 60px;
-    }
-    .preview-box {
-      text-align: center;
-    }
-    canvas {
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-    #banner2Canvas, #banner4Canvas, #banner6Canvas, #banner8Canvas {
-      width: 324px;
-      height: 324px;
-    }
-    #bannerCanvas, #banner3Canvas, #banner5Canvas, #banner7Canvas {
-      width: 728px;
-      height: 90px;
-    }
-    h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-    h3 a {
-      font-size: 16px;
-      margin-left: 10px;
-      color: #4CAF50;
-      text-decoration: underline;
-      cursor: pointer;
-      display: none;
-    }
+    body { text-align: center; padding: 50px; font-family: 'Poppins', sans-serif; }
+    .banner-set { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-bottom: 60px; }
+    .column-set { display: flex; flex-direction: column; gap: 30px; }
+    .preview-box { text-align: center; }
+    canvas { border: 1px solid #ccc; margin-bottom: 10px; }
+    #banner2Canvas, #banner2CanvasKR { width: 324px; height: 324px; }
+    #bannerCanvas, #bannerCanvasKR { width: 728px; height: 90px; }
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    h3 a { font-size: 16px; margin-left: 10px; color: #4CAF50; text-decoration: underline; cursor: pointer; display: none; }
   </style>
 </head>
 <body>
-  <h1>Download Your Booth Banners</h1>
-  <input type="text" id="boothInput" placeholder="Enter Booth Number" style="padding:10px; font-size:16px;">
+  <h1>Download Your Booth Banners (KR + EN)</h1>
+  <input type="text" id="boothInput" placeholder="부스 번호 입력" style="padding:10px; font-size:16px;">
   <br><br>
   <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
-
   <div class="preview-container">
-
     <div class="banner-set">
-      <div class="preview-box">
-        <h3>CPHI Banner (728x90)<a id="downloadLink1" download>Download</a></h3>
-        <canvas id="bannerCanvas" width="728" height="90"></canvas>
+      <div class="column-set">
+        <div class="preview-box"><h3>CPHI (728x90)<a id="downloadLink1">Download</a></h3><canvas id="bannerCanvas" width="728" height="90"></canvas></div>
+        <div class="preview-box"><h3>CPHI 국문 (728x90)<a id="downloadLink9">Download</a></h3><canvas id="bannerCanvasKR" width="728" height="90"></canvas></div>
       </div>
-      <div class="preview-box">
-        <h3>CPHI Banner (1080x1080)<a id="downloadLink2" download>Download</a></h3>
-        <canvas id="banner2Canvas" width="1080" height="1080"></canvas>
-      </div>
+      <div class="preview-box"><h3>CPHI (1080x1080)<a id="downloadLink2">Download</a></h3><canvas id="banner2Canvas" width="1080" height="1080"></canvas></div>
+      <div class="preview-box"><h3>CPHI 국문 (1080x1080)<a id="downloadLink10">Download</a></h3><canvas id="banner2CanvasKR" width="1080" height="1080"></canvas></div>
     </div>
-
-    <div class="banner-set">
-      <div class="preview-box">
-        <h3>bioLIVE Banner (728x90)<a id="downloadLink3" download>Download</a></h3>
-        <canvas id="banner3Canvas" width="728" height="90"></canvas>
-      </div>
-      <div class="preview-box">
-        <h3>bioLIVE Banner (1080x1080)<a id="downloadLink4" download>Download</a></h3>
-        <canvas id="banner4Canvas" width="1080" height="1080"></canvas>
-      </div>
-    </div>
-
-    <div class="banner-set">
-      <div class="preview-box">
-        <h3>PMEC Banner (728x90)<a id="downloadLink5" download>Download</a></h3>
-        <canvas id="banner5Canvas" width="728" height="90"></canvas>
-      </div>
-      <div class="preview-box">
-        <h3>PMEC Banner (1080x1080)<a id="downloadLink6" download>Download</a></h3>
-        <canvas id="banner6Canvas" width="1080" height="1080"></canvas>
-      </div>
-    </div>
-
-    <div class="banner-set">
-      <div class="preview-box">
-        <h3>Hi Korea Banner (728x90)<a id="downloadLink7" download>Download</a></h3>
-        <canvas id="banner7Canvas" width="728" height="90"></canvas>
-      </div>
-      <div class="preview-box">
-        <h3>Hi Korea Banner (1080x1080)<a id="downloadLink8" download>Download</a></h3>
-        <canvas id="banner8Canvas" width="1080" height="1080"></canvas>
-      </div>
-    </div>
-
   </div>
 
   <script>
     function loadImage(src) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         const img = new Image();
         img.src = src;
         img.onload = () => resolve(img);
@@ -111,119 +45,74 @@
     }
 
     window.onload = async function () {
-      const [img1, img2, img3, img4, img5, img6, img7, img8] = await Promise.all([
-        loadImage('cphi-banner2-en.png'),
-        loadImage('cphi-banner1-en.png'),
-        loadImage('bio-banner2-en.png'),
-        loadImage('bio-banner1-en.png'),
-        loadImage('pmec-banner2-en.png'),
-        loadImage('pmec-banner1-en.png'),
-        loadImage('hi-banner2-en.png'),
-        loadImage('hi-banner1-en.png')
-      ]);
-
-      const ids = [
-        'bannerCanvas', 'banner2Canvas', 'banner3Canvas', 'banner4Canvas',
-        'banner5Canvas', 'banner6Canvas', 'banner7Canvas', 'banner8Canvas'
-      ];
-
-      const images = [img1, img2, img3, img4, img5, img6, img7, img8];
-
+      const imgSrcs = ['cphi-banner2-en.png', 'cphi-banner1-en.png', 'cphi-banner2-kr.png', 'cphi-banner1-kr.png'];
+      const ids = ['bannerCanvas', 'banner2Canvas', 'bannerCanvasKR', 'banner2CanvasKR'];
+      const images = await Promise.all(imgSrcs.map(loadImage));
       ids.forEach((id, i) => {
         const canvas = document.getElementById(id);
         const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(images[i], 0, 0, canvas.width, canvas.height);
       });
     };
 
     async function generateBanners() {
-      const boothNumber = document.getElementById('boothInput').value;
-      const [img1, img2, img3, img4, img5, img6, img7, img8] = await Promise.all([
-        loadImage('cphi-banner2-en.png'),
-        loadImage('cphi-banner1-en.png'),
-        loadImage('bio-banner2-en.png'),
-        loadImage('bio-banner1-en.png'),
-        loadImage('pmec-banner2-en.png'),
-        loadImage('pmec-banner1-en.png'),
-        loadImage('hi-banner2-en.png'),
-        loadImage('hi-banner1-en.png')
-      ]);
-
-      const canvases = [
-        { id: 'bannerCanvas', image: img1, draw: drawWideBanner },
-        { id: 'banner2Canvas', image: img2, draw: drawSquareRight },
-        { id: 'banner3Canvas', image: img3, draw: drawWideBanner },
-        { id: 'banner4Canvas', image: img4, draw: drawSquareBio },
-        { id: 'banner5Canvas', image: img5, draw: drawWideBanner },
-        { id: 'banner6Canvas', image: img6, draw: drawSquareRight },
-        { id: 'banner7Canvas', image: img7, draw: drawWideBannerHi },
-        { id: 'banner8Canvas', image: img8, draw: drawSquareHi }
-      ];
-
+      const booth = document.getElementById("boothInput").value;
       await document.fonts.ready;
-
-      canvases.forEach((c, i) => {
-        const canvas = document.getElementById(c.id);
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(c.image, 0, 0, canvas.width, canvas.height);
-        c.draw(ctx, canvas, boothNumber);
-        const link = document.getElementById('downloadLink' + (i + 1));
-        link.href = canvas.toDataURL('image/png');
-        link.download = `booth-banner-${i + 1}.png`;
-        link.style.display = 'inline';
-      });
+      function writeText(canvasId, imgSrc, drawFn, downloadIndex) {
+        loadImage(imgSrc).then(img => {
+          const canvas = document.getElementById(canvasId);
+          const ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          drawFn(ctx, canvas, booth);
+          const link = document.getElementById('downloadLink' + downloadIndex);
+          link.href = canvas.toDataURL();
+          link.download = canvasId + '.png';
+          link.style.display = 'inline';
+        });
+      }
+      writeText('bannerCanvas', 'cphi-banner2-en.png', drawWideEn, 1);
+      writeText('banner2Canvas', 'cphi-banner1-en.png', drawSquareEn, 2);
+      writeText('bannerCanvasKR', 'cphi-banner2-kr.png', drawWideKr, 9);
+      writeText('banner2CanvasKR', 'cphi-banner1-kr.png', drawSquareKr, 10);
     }
 
-    function drawWideBanner(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 20px Poppins';
-      ctx.fillText('Visit our booth at', canvas.width / 2, 30);
-      ctx.font = '700 30px Poppins';
-      ctx.fillText(boothNumber, canvas.width / 2, 65);
+    function drawWideEn(ctx, canvas, booth) {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "700 20px Poppins";
+      ctx.fillText("Visit our booth at", canvas.width / 2, 30);
+      ctx.font = "700 30px Poppins";
+      ctx.fillText(booth, canvas.width / 2, 65);
     }
 
-    function drawWideBannerHi(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 20px "Nunito Sans", sans-serif';
-      ctx.fillText('Visit our booth at', canvas.width / 2, 30);
-      ctx.font = '700 30px "Nunito Sans", sans-serif';
-      ctx.fillText(boothNumber, canvas.width / 2, 65);
+    function drawSquareEn(ctx, canvas, booth) {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.font = "700 80px Poppins";
+      ctx.fillText("Visit us", 980, 440);
+      ctx.font = "700 100px Poppins";
+      ctx.fillText("Booth " + booth, 980, 560);
     }
 
-    function drawSquareRight(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 80px Poppins';
-      ctx.fillText('Visit us', 980, 440);
-      ctx.font = '700 100px Poppins';
-      ctx.fillText('Booth ' + boothNumber, 980, 560);
+    function drawWideKr(ctx, canvas, booth) {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "700 28px 'Noto Sans KR'";
+      ctx.fillText("부스를 방문해주세요!", canvas.width / 2, 55);
     }
 
-    function drawSquareBio(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 80px Poppins';
-      ctx.fillText('Visit us', 980, 400);
-      ctx.font = '700 100px Poppins';
-      ctx.fillText('Booth ' + boothNumber, 980, 500);
-    }
-
-    function drawSquareHi(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 90px "Nunito Sans", sans-serif';
-      ctx.fillText('VISIT US AT', 75, 140);
-      ctx.font = '700 120px "Nunito Sans", sans-serif';
-      ctx.fillText('Booth ' + boothNumber, 75, 245); // 살짝 간격 띄움
+    function drawSquareKr(ctx, canvas, booth) {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      ctx.font = "700 90px 'Noto Sans KR'";
+      ctx.fillText("부스를 방문해주세요!", 75, 140);
+      ctx.font = "700 120px 'Noto Sans KR'";
+      ctx.fillText("Booth " + booth, 75, 245);
     }
   </script>
 </body>
