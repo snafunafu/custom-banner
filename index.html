@@ -23,7 +23,7 @@
 
     .preview-box {
       text-align: center;
-      width: 270px;
+      width: 340px;
     }
 
     canvas {
@@ -39,7 +39,8 @@
 
     .wide {
       width: 324px;
-      height: 40px;
+      height: auto;
+      aspect-ratio: 728 / 90;
     }
 
     h3 {
@@ -138,9 +139,9 @@
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
 
-        drawWide(document.getElementById('canvas' + (baseIndex + 1)), booth, font);
+        drawWide(document.getElementById('canvas' + (baseIndex + 1)), booth, font, 'en');
         drawSquare(document.getElementById('canvas' + (baseIndex + 2)), booth, font, set);
-        drawWide(document.getElementById('canvas' + (baseIndex + 3)), booth, "'Noto Sans KR'");
+        drawWide(document.getElementById('canvas' + (baseIndex + 3)), booth, "'Noto Sans KR'", 'kr');
         drawSquare(document.getElementById('canvas' + (baseIndex + 4)), booth, "'Noto Sans KR'", set);
 
         for (let j = 1; j <= 4; j++) {
@@ -153,13 +154,13 @@
       });
     }
 
-    function drawWide(canvas, booth, font) {
+    function drawWide(canvas, booth, font, lang) {
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.font = `700 20px ${font}`;
-      ctx.fillText('Visit us', canvas.width / 2, 30);
+      ctx.fillText(lang === 'kr' ? '부스를 방문해주세요!' : 'Visit our booth at', canvas.width / 2, 30);
       ctx.font = `700 30px ${font}`;
       ctx.fillText(booth, canvas.width / 2, 65);
     }
@@ -192,4 +193,5 @@
   </script>
 </body>
 </html>
+
 
