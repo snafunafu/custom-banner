@@ -67,6 +67,7 @@
   <script>
     const sets = ["cphi", "bio", "pmec", "hi"];
     const fonts = ["Poppins", "Poppins", "Poppins", "Nunito Sans"];
+    let allImages = [];
 
     function createCanvasSet(index, name) {
       const container = document.getElementById('container');
@@ -103,7 +104,7 @@
     }
 
     window.onload = async function () {
-      const allImages = await Promise.all(
+      allImages = await Promise.all(
         sets.flatMap(base => [
           loadImage(`${base}-banner2-en.png`),
           loadImage(`${base}-banner1-en.png`),
@@ -128,6 +129,15 @@
         const baseIndex = i * 4;
         const font = fonts[i];
 
+        for (let j = 1; j <= 4; j++) {
+          const canvasId = 'canvas' + (baseIndex + j);
+          const canvas = document.getElementById(canvasId);
+          const ctx = canvas.getContext('2d');
+          const img = allImages[baseIndex + j - 1];
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+
         drawWide(document.getElementById('canvas' + (baseIndex + 1)), 'en', booth, font);
         drawSquare(document.getElementById('canvas' + (baseIndex + 2)), 'en', booth, font, set);
         drawWide(document.getElementById('canvas' + (baseIndex + 3)), 'kr', booth, "'Noto Sans KR'");
@@ -145,7 +155,6 @@
 
     function drawWide(canvas, lang, booth, font) {
       const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -157,7 +166,6 @@
 
     function drawSquare(canvas, lang, booth, font, set) {
       const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#FFFFFF';
       ctx.textBaseline = 'middle';
 
