@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Custom Booth Banners</title>
+
+  <!-- Poppins (기본 세트) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <!-- Nunito Sans (Hi Korea 전용) -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
+
   <style>
     body {
       text-align: center;
@@ -176,17 +181,15 @@
       ctx.fillText('Booth ' + boothNumber, 980, 500);
     }
 
-function drawSquareHi(ctx, canvas, boothNumber) {
-  ctx.fillStyle = '#FFFFFF';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-
-  ctx.font = '700 80px Poppins';
-  ctx.fillText('VISIT US AT', 100, 180);
-
-  ctx.font = '700 110px Poppins';
-  ctx.fillText('Booth ' + boothNumber, 100, 280);
-}
+    function drawSquareHi(ctx, canvas, boothNumber) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.font = '700 90px "Nunito Sans", sans-serif';
+      ctx.fillText('VISIT US AT', 100, 160);
+      ctx.font = '700 120px "Nunito Sans", sans-serif';
+      ctx.fillText('Booth ' + boothNumber, 100, 260);
+    }
   </script>
 
 </body>
