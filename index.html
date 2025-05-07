@@ -24,11 +24,11 @@
       border: 1px solid #ccc;
       margin-bottom: 10px;
     }
-    #bannerCanvas, #banner3Canvas, #banner5Canvas {
+    #bannerCanvas, #banner3Canvas, #banner5Canvas, #banner7Canvas {
       width: 728px;
       height: 90px;
     }
-    #banner2Canvas, #banner4Canvas, #banner6Canvas {
+    #banner2Canvas, #banner4Canvas, #banner6Canvas, #banner8Canvas {
       width: 540px;
       height: 540px;
     }
@@ -54,52 +54,45 @@
   <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
 
   <div class="preview-container">
+
     <!-- 세트 1 - CPHI -->
     <div class="preview-box">
-      <h3>
-        CPHI Banner (728x90)
-        <a id="downloadLink1" download>Download</a>
-      </h3>
+      <h3>CPHI Banner (728x90)<a id="downloadLink1" download>Download</a></h3>
       <canvas id="bannerCanvas" width="728" height="90"></canvas>
     </div>
     <div class="preview-box">
-      <h3>
-        CPHI Banner (1080x1080)
-        <a id="downloadLink2" download>Download</a>
-      </h3>
+      <h3>CPHI Banner (1080x1080)<a id="downloadLink2" download>Download</a></h3>
       <canvas id="banner2Canvas" width="1080" height="1080"></canvas>
     </div>
 
     <!-- 세트 2 - bioLIVE -->
     <div class="preview-box">
-      <h3>
-        bioLIVE Banner (728x90)
-        <a id="downloadLink3" download>Download</a>
-      </h3>
+      <h3>bioLIVE Banner (728x90)<a id="downloadLink3" download>Download</a></h3>
       <canvas id="banner3Canvas" width="728" height="90"></canvas>
     </div>
     <div class="preview-box">
-      <h3>
-        bioLIVE Banner (1080x1080)
-        <a id="downloadLink4" download>Download</a>
-      </h3>
+      <h3>bioLIVE Banner (1080x1080)<a id="downloadLink4" download>Download</a></h3>
       <canvas id="banner4Canvas" width="1080" height="1080"></canvas>
     </div>
 
     <!-- 세트 3 - PMEC -->
     <div class="preview-box">
-      <h3>
-        PMEC Banner (728x90)
-        <a id="downloadLink5" download>Download</a>
-      </h3>
+      <h3>PMEC Banner (728x90)<a id="downloadLink5" download>Download</a></h3>
       <canvas id="banner5Canvas" width="728" height="90"></canvas>
     </div>
     <div class="preview-box">
-      <h3>
-        PMEC Banner (1080x1080)
-        <a id="downloadLink6" download>Download</a>
-      </h3>
+      <h3>PMEC Banner (1080x1080)<a id="downloadLink6" download>Download</a></h3>
       <canvas id="banner6Canvas" width="1080" height="1080"></canvas>
+    </div>
+
+    <!-- 세트 4 - Hi Korea -->
+    <div class="preview-box">
+      <h3>Hi Korea Banner (728x90)<a id="downloadLink7" download>Download</a></h3>
+      <canvas id="banner7Canvas" width="728" height="90"></canvas>
+    </div>
+    <div class="preview-box">
+      <h3>Hi Korea Banner (1080x1080)<a id="downloadLink8" download>Download</a></h3>
+      <canvas id="banner8Canvas" width="1080" height="1080"></canvas>
     </div>
   </div>
 
@@ -115,22 +108,26 @@
     async function generateBanners() {
       const boothNumber = document.getElementById('boothInput').value;
 
-      const [img1, img2, img3, img4, img5, img6] = await Promise.all([
+      const [img1, img2, img3, img4, img5, img6, img7, img8] = await Promise.all([
         loadImage('cphi-banner2-en.png'),
         loadImage('cphi-banner1-en.png'),
         loadImage('bio-banner2-en.png'),
         loadImage('bio-banner1-en.png'),
         loadImage('pmec-banner2-en.png'),
-        loadImage('pmec-banner1-en.png')
+        loadImage('pmec-banner1-en.png'),
+        loadImage('hi-banner2-en.png'),
+        loadImage('hi-banner1-en.png')
       ]);
 
       const canvases = [
         { id: 'bannerCanvas', image: img1, draw: drawWideBanner },
-        { id: 'banner2Canvas', image: img2, draw: drawSquareBannerRight },
+        { id: 'banner2Canvas', image: img2, draw: drawSquareRight },
         { id: 'banner3Canvas', image: img3, draw: drawWideBanner },
-        { id: 'banner4Canvas', image: img4, draw: drawSquareBannerBio },
+        { id: 'banner4Canvas', image: img4, draw: drawSquareBio },
         { id: 'banner5Canvas', image: img5, draw: drawWideBanner },
-        { id: 'banner6Canvas', image: img6, draw: drawSquareBannerRight }
+        { id: 'banner6Canvas', image: img6, draw: drawSquareRight },
+        { id: 'banner7Canvas', image: img7, draw: drawWideBanner },
+        { id: 'banner8Canvas', image: img8, draw: drawSquareHi }
       ];
 
       await document.fonts.ready;
@@ -159,7 +156,7 @@
       ctx.fillText(boothNumber, canvas.width / 2, 65);
     }
 
-    function drawSquareBannerRight(ctx, canvas, boothNumber) {
+    function drawSquareRight(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
@@ -169,7 +166,7 @@
       ctx.fillText('Booth ' + boothNumber, 980, 560);
     }
 
-    function drawSquareBannerBio(ctx, canvas, boothNumber) {
+    function drawSquareBio(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
@@ -177,6 +174,16 @@
       ctx.fillText('Visit us', 980, 400);
       ctx.font = '700 100px Poppins';
       ctx.fillText('Booth ' + boothNumber, 980, 500);
+    }
+
+    function drawSquareHi(ctx, canvas, boothNumber) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.font = '700 80px Poppins';
+      ctx.fillText('VISIT US AT', 100, 280);
+      ctx.font = '700 110px Poppins';
+      ctx.fillText('Booth ' + boothNumber, 100, 380);
     }
   </script>
 
