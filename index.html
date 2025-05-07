@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Custom Booth Banners</title>
 
-  <!-- Poppins (기본 세트) -->
+  <!-- 기본 Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
   <!-- Nunito Sans (Hi Korea 전용) -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
@@ -59,8 +59,7 @@
   <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
 
   <div class="preview-container">
-
-    <!-- 세트 1 - CPHI -->
+    <!-- 세트 1: CPHI -->
     <div class="preview-box">
       <h3>CPHI Banner (728x90)<a id="downloadLink1" download>Download</a></h3>
       <canvas id="bannerCanvas" width="728" height="90"></canvas>
@@ -70,7 +69,7 @@
       <canvas id="banner2Canvas" width="1080" height="1080"></canvas>
     </div>
 
-    <!-- 세트 2 - bioLIVE -->
+    <!-- 세트 2: bioLIVE -->
     <div class="preview-box">
       <h3>bioLIVE Banner (728x90)<a id="downloadLink3" download>Download</a></h3>
       <canvas id="banner3Canvas" width="728" height="90"></canvas>
@@ -80,7 +79,7 @@
       <canvas id="banner4Canvas" width="1080" height="1080"></canvas>
     </div>
 
-    <!-- 세트 3 - PMEC -->
+    <!-- 세트 3: PMEC -->
     <div class="preview-box">
       <h3>PMEC Banner (728x90)<a id="downloadLink5" download>Download</a></h3>
       <canvas id="banner5Canvas" width="728" height="90"></canvas>
@@ -90,7 +89,7 @@
       <canvas id="banner6Canvas" width="1080" height="1080"></canvas>
     </div>
 
-    <!-- 세트 4 - Hi Korea -->
+    <!-- 세트 4: Hi Korea -->
     <div class="preview-box">
       <h3>Hi Korea Banner (728x90)<a id="downloadLink7" download>Download</a></h3>
       <canvas id="banner7Canvas" width="728" height="90"></canvas>
@@ -131,7 +130,7 @@
         { id: 'banner4Canvas', image: img4, draw: drawSquareBio },
         { id: 'banner5Canvas', image: img5, draw: drawWideBanner },
         { id: 'banner6Canvas', image: img6, draw: drawSquareRight },
-        { id: 'banner7Canvas', image: img7, draw: drawWideBanner },
+        { id: 'banner7Canvas', image: img7, draw: drawWideBannerHi },
         { id: 'banner8Canvas', image: img8, draw: drawSquareHi }
       ];
 
@@ -161,6 +160,16 @@
       ctx.fillText(boothNumber, canvas.width / 2, 65);
     }
 
+    function drawWideBannerHi(ctx, canvas, boothNumber) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '700 20px "Nunito Sans", sans-serif';
+      ctx.fillText('Visit our booth at', canvas.width / 2, 30);
+      ctx.font = '700 30px "Nunito Sans", sans-serif';
+      ctx.fillText(boothNumber, canvas.width / 2, 65);
+    }
+
     function drawSquareRight(ctx, canvas, boothNumber) {
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'right';
@@ -181,17 +190,15 @@
       ctx.fillText('Booth ' + boothNumber, 980, 500);
     }
 
-function drawSquareHi(ctx, canvas, boothNumber) {
-  ctx.fillStyle = '#FFFFFF';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-
-  ctx.font = '700 90px "Nunito Sans", sans-serif';
-  ctx.fillText('VISIT US AT', 75, 140);
-
-  ctx.font = '700 120px "Nunito Sans", sans-serif';
-  ctx.fillText('Booth ' + boothNumber, 75, 230);
-}
+    function drawSquareHi(ctx, canvas, boothNumber) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.font = '700 90px "Nunito Sans", sans-serif';
+      ctx.fillText('VISIT US AT', 75, 140);
+      ctx.font = '700 120px "Nunito Sans", sans-serif';
+      ctx.fillText('Booth ' + boothNumber, 75, 245);
+    }
   </script>
 
 </body>
