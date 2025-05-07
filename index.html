@@ -2,9 +2,10 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Custom Booth Banners</title>
+  <title>Custom Booth Banners (KR + EN)</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       text-align: center;
@@ -31,13 +32,12 @@
       max-width: 100%;
     }
 
-    /* 미리보기 캔버스 크기 최적화 */
-    #banner2Canvas, #banner4Canvas, #banner6Canvas, #banner8Canvas {
+    .square {
       width: 270px;
       height: 270px;
     }
 
-    #bannerCanvas, #banner3Canvas, #banner5Canvas, #banner7Canvas {
+    .wide {
       width: 324px;
       height: 40px;
     }
@@ -58,59 +58,43 @@
   </style>
 </head>
 <body>
-  <h1>Download Your Booth Banners</h1>
-  <input type="text" id="boothInput" placeholder="Enter Booth Number" style="padding:10px; font-size:16px;">
+  <h1>Download Your Booth Banners (KR + EN)</h1>
+  <input type="text" id="boothInput" placeholder="부스 번호 입력" style="padding:10px; font-size:16px;">
   <br><br>
   <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
-
-  <div class="preview-container">
-    <div class="banner-set">
-      <div class="preview-box">
-        <h3>CPHI Banner (728x90)<a id="downloadLink1" download>Download</a></h3>
-        <canvas id="bannerCanvas" width="728" height="90"></canvas>
-      </div>
-      <div class="preview-box">
-        <h3>CPHI Banner (1080x1080)<a id="downloadLink2" download>Download</a></h3>
-        <canvas id="banner2Canvas" width="1080" height="1080"></canvas>
-      </div>
-    </div>
-
-    <div class="banner-set">
-      <div class="preview-box">
-        <h3>bioLIVE Banner (728x90)<a id="downloadLink3" download>Download</a></h3>
-        <canvas id="banner3Canvas" width="728" height="90"></canvas>
-      </div>
-      <div class="preview-box">
-        <h3>bioLIVE Banner (1080x1080)<a id="downloadLink4" download>Download</a></h3>
-        <canvas id="banner4Canvas" width="1080" height="1080"></canvas>
-      </div>
-    </div>
-
-    <div class="banner-set">
-      <div class="preview-box">
-        <h3>PMEC Banner (728x90)<a id="downloadLink5" download>Download</a></h3>
-        <canvas id="banner5Canvas" width="728" height="90"></canvas>
-      </div>
-      <div class="preview-box">
-        <h3>PMEC Banner (1080x1080)<a id="downloadLink6" download>Download</a></h3>
-        <canvas id="banner6Canvas" width="1080" height="1080"></canvas>
-      </div>
-    </div>
-
-    <div class="banner-set">
-      <div class="preview-box">
-        <h3>Hi Korea Banner (728x90)<a id="downloadLink7" download>Download</a></h3>
-        <canvas id="banner7Canvas" width="728" height="90"></canvas>
-      </div>
-      <div class="preview-box">
-        <h3>Hi Korea Banner (1080x1080)<a id="downloadLink8" download>Download</a></h3>
-        <canvas id="banner8Canvas" width="1080" height="1080"></canvas>
-      </div>
-    </div>
-  </div>
+  <div id="container"></div>
 
   <script>
-    function loadImage(src) {
+    const sets = ["cphi", "bio", "pmec", "hi"];
+    const fonts = ["Poppins", "Poppins", "Poppins", "Nunito Sans"];
+
+    function createCanvasSet(index, name) {
+      const container = document.getElementById('container');
+      const html = `
+        <div class="banner-set">
+          <div class="preview-box">
+            <h3>${name} EN Wide<a id="downloadLink${index*4+1}" download>Download</a></h3>
+            <canvas id="canvas${index*4+1}" class="wide" width="728" height="90"></canvas>
+          </div>
+          <div class="preview-box">
+            <h3>${name} EN Square<a id="downloadLink${index*4+2}" download>Download</a></h3>
+            <canvas id="canvas${index*4+2}" class="square" width="1080" height="1080"></canvas>
+          </div>
+          <div class="preview-box">
+            <h3>${name} KR Wide<a id="downloadLink${index*4+3}" download>Download</a></h3>
+            <canvas id="canvas${index*4+3}" class="wide" width="728" height="90"></canvas>
+          </div>
+          <div class="preview-box">
+            <h3>${name} KR Square<a id="downloadLink${index*4+4}" download>Download</a></h3>
+            <canvas id="canvas${index*4+4}" class="square" width="1080" height="1080"></canvas>
+          </div>
+        </div>`;
+      container.insertAdjacentHTML('beforeend', html);
+    }
+
+    sets.forEach((name, i) => createCanvasSet(i, name.toUpperCase()));
+
+    async function loadImage(src) {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = src;
@@ -119,124 +103,84 @@
     }
 
     window.onload = async function () {
-      const images = await Promise.all([
-        loadImage('cphi-banner2-en.png'),
-        loadImage('cphi-banner1-en.png'),
-        loadImage('bio-banner2-en.png'),
-        loadImage('bio-banner1-en.png'),
-        loadImage('pmec-banner2-en.png'),
-        loadImage('pmec-banner1-en.png'),
-        loadImage('hi-banner2-en.png'),
-        loadImage('hi-banner1-en.png')
-      ]);
+      const allImages = await Promise.all(
+        sets.flatMap(base => [
+          loadImage(`${base}-banner2-en.png`),
+          loadImage(`${base}-banner1-en.png`),
+          loadImage(`${base}-banner2-kr.png`),
+          loadImage(`${base}-banner1-kr.png`)
+        ])
+      );
 
-      const ids = [
-        'bannerCanvas', 'banner2Canvas', 'banner3Canvas', 'banner4Canvas',
-        'banner5Canvas', 'banner6Canvas', 'banner7Canvas', 'banner8Canvas'
-      ];
-
-      ids.forEach((id, i) => {
-        const canvas = document.getElementById(id);
+      allImages.forEach((img, i) => {
+        const canvas = document.getElementById('canvas' + (i + 1));
         const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(images[i], 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       });
     };
 
     async function generateBanners() {
-      const boothNumber = document.getElementById('boothInput').value;
-      if (!boothNumber) {
-        alert("부스 번호를 입력해주세요!");
-        return;
-      }
-
-      const images = await Promise.all([
-        loadImage('cphi-banner2-en.png'),
-        loadImage('cphi-banner1-en.png'),
-        loadImage('bio-banner2-en.png'),
-        loadImage('bio-banner1-en.png'),
-        loadImage('pmec-banner2-en.png'),
-        loadImage('pmec-banner1-en.png'),
-        loadImage('hi-banner2-en.png'),
-        loadImage('hi-banner1-en.png')
-      ]);
-
-      const canvases = [
-        { id: 'bannerCanvas', image: images[0], draw: drawWideBanner },
-        { id: 'banner2Canvas', image: images[1], draw: drawSquareRight },
-        { id: 'banner3Canvas', image: images[2], draw: drawWideBanner },
-        { id: 'banner4Canvas', image: images[3], draw: drawSquareBio },
-        { id: 'banner5Canvas', image: images[4], draw: drawWideBanner },
-        { id: 'banner6Canvas', image: images[5], draw: drawSquareRight },
-        { id: 'banner7Canvas', image: images[6], draw: drawWideBannerHi },
-        { id: 'banner8Canvas', image: images[7], draw: drawSquareHi }
-      ];
-
+      const booth = document.getElementById("boothInput").value;
+      if (!booth) return alert("부스 번호를 입력해주세요!");
       await document.fonts.ready;
 
-      canvases.forEach((c, i) => {
-        const canvas = document.getElementById(c.id);
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(c.image, 0, 0, canvas.width, canvas.height);
-        c.draw(ctx, canvas, boothNumber);
-        const link = document.getElementById('downloadLink' + (i + 1));
-        link.href = canvas.toDataURL('image/png');
-        link.download = `booth-banner-${i + 1}.png`;
-        link.style.display = 'inline';
+      sets.forEach((set, i) => {
+        const baseIndex = i * 4;
+        const font = fonts[i];
+
+        drawWide(document.getElementById('canvas' + (baseIndex + 1)), 'en', booth, font);
+        drawSquare(document.getElementById('canvas' + (baseIndex + 2)), 'en', booth, font, set);
+        drawWide(document.getElementById('canvas' + (baseIndex + 3)), 'kr', booth, "'Noto Sans KR'");
+        drawSquare(document.getElementById('canvas' + (baseIndex + 4)), 'kr', booth, "'Noto Sans KR'", set);
+
+        for (let j = 1; j <= 4; j++) {
+          const canvas = document.getElementById('canvas' + (baseIndex + j));
+          const link = document.getElementById('downloadLink' + (baseIndex + j));
+          link.href = canvas.toDataURL();
+          link.download = `${set}-banner${j}.png`;
+          link.style.display = 'inline';
+        }
       });
     }
 
-    function drawWideBanner(ctx, canvas, boothNumber) {
+    function drawWide(canvas, lang, booth, font) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = '700 20px Poppins';
-      ctx.fillText('Visit our booth at', canvas.width / 2, 30);
-      ctx.font = '700 30px Poppins';
-      ctx.fillText(boothNumber, canvas.width / 2, 65);
+      ctx.font = `700 20px ${font}`;
+      ctx.fillText(lang === 'en' ? 'Visit our booth at' : '부스를 방문해주세요!', canvas.width / 2, 30);
+      ctx.font = `700 30px ${font}`;
+      ctx.fillText(booth, canvas.width / 2, 65);
     }
 
-    function drawWideBannerHi(ctx, canvas, boothNumber) {
+    function drawSquare(canvas, lang, booth, font, set) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = '700 20px "Nunito Sans", sans-serif';
-      ctx.fillText('Visit our booth at', canvas.width / 2, 30);
-      ctx.font = '700 30px "Nunito Sans", sans-serif';
-      ctx.fillText(boothNumber, canvas.width / 2, 65);
-    }
 
-    function drawSquareRight(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 80px Poppins';
-      ctx.fillText('Visit us', 980, 440);
-      ctx.font = '700 100px Poppins';
-      ctx.fillText('Booth ' + boothNumber, 980, 560);
-    }
-
-    function drawSquareBio(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 80px Poppins';
-      ctx.fillText('Visit us', 980, 400);
-      ctx.font = '700 100px Poppins';
-      ctx.fillText('Booth ' + boothNumber, 980, 500);
-    }
-
-    function drawSquareHi(ctx, canvas, boothNumber) {
-      ctx.fillStyle = '#FFFFFF';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.font = '700 90px "Nunito Sans", sans-serif';
-      ctx.fillText('VISIT US AT', 75, 140);
-      ctx.font = '700 120px "Nunito Sans", sans-serif';
-      ctx.fillText('Booth ' + boothNumber, 75, 245);
+      if (set === 'hi') {
+        ctx.textAlign = 'left';
+        ctx.font = `700 90px ${font}`;
+        ctx.fillText(lang === 'en' ? 'VISIT US AT' : '방문해주세요!', 75, 140);
+        ctx.font = `700 120px ${font}`;
+        ctx.fillText('Booth ' + booth, 75, 245);
+      } else if (set === 'bio') {
+        ctx.textAlign = 'right';
+        ctx.font = `700 80px ${font}`;
+        ctx.fillText(lang === 'en' ? 'Visit us' : '방문해주세요!', 980, 400);
+        ctx.font = `700 100px ${font}`;
+        ctx.fillText('Booth ' + booth, 980, 500);
+      } else {
+        ctx.textAlign = lang === 'en' ? 'right' : 'center';
+        ctx.font = `700 80px ${font}`;
+        ctx.fillText(lang === 'en' ? 'Visit us' : '방문해주세요!', lang === 'en' ? 980 : canvas.width / 2, 440);
+        ctx.font = `700 100px ${font}`;
+        ctx.fillText('Booth ' + booth, lang === 'en' ? 980 : canvas.width / 2, 560);
+      }
     }
   </script>
 </body>
 </html>
-
