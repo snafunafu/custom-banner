@@ -138,10 +138,10 @@
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
 
-        drawWide(document.getElementById('canvas' + (baseIndex + 1)), 'en', booth, font);
-        drawSquare(document.getElementById('canvas' + (baseIndex + 2)), 'en', booth, font, set);
-        drawWide(document.getElementById('canvas' + (baseIndex + 3)), 'kr', booth, "'Noto Sans KR'");
-        drawSquare(document.getElementById('canvas' + (baseIndex + 4)), 'kr', booth, "'Noto Sans KR'", set);
+        drawWide(document.getElementById('canvas' + (baseIndex + 1)), booth, font);
+        drawSquare(document.getElementById('canvas' + (baseIndex + 2)), booth, font, set);
+        drawWide(document.getElementById('canvas' + (baseIndex + 3)), booth, "'Noto Sans KR'");
+        drawSquare(document.getElementById('canvas' + (baseIndex + 4)), booth, "'Noto Sans KR'", set);
 
         for (let j = 1; j <= 4; j++) {
           const canvas = document.getElementById('canvas' + (baseIndex + j));
@@ -153,18 +153,18 @@
       });
     }
 
-    function drawWide(canvas, lang, booth, font) {
+    function drawWide(canvas, booth, font) {
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.font = `700 20px ${font}`;
-      ctx.fillText(lang === 'en' ? 'Visit our booth at' : '부스를 방문해주세요!', canvas.width / 2, 30);
+      ctx.fillText('Visit us', canvas.width / 2, 30);
       ctx.font = `700 30px ${font}`;
       ctx.fillText(booth, canvas.width / 2, 65);
     }
 
-    function drawSquare(canvas, lang, booth, font, set) {
+    function drawSquare(canvas, booth, font, set) {
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = '#FFFFFF';
       ctx.textBaseline = 'middle';
@@ -172,23 +172,24 @@
       if (set === 'hi') {
         ctx.textAlign = 'left';
         ctx.font = `700 90px ${font}`;
-        ctx.fillText(lang === 'en' ? 'VISIT US AT' : '방문해주세요!', 75, 140);
+        ctx.fillText('Visit us', 75, 140);
         ctx.font = `700 120px ${font}`;
         ctx.fillText('Booth ' + booth, 75, 245);
       } else if (set === 'bio') {
         ctx.textAlign = 'right';
         ctx.font = `700 80px ${font}`;
-        ctx.fillText(lang === 'en' ? 'Visit us' : '방문해주세요!', 980, 400);
+        ctx.fillText('Visit us', 980, 400);
         ctx.font = `700 100px ${font}`;
         ctx.fillText('Booth ' + booth, 980, 500);
       } else {
-        ctx.textAlign = lang === 'en' ? 'right' : 'center';
+        ctx.textAlign = 'right';
         ctx.font = `700 80px ${font}`;
-        ctx.fillText(lang === 'en' ? 'Visit us' : '방문해주세요!', lang === 'en' ? 980 : canvas.width / 2, 440);
+        ctx.fillText('Visit us', 980, 440);
         ctx.font = `700 100px ${font}`;
-        ctx.fillText('Booth ' + booth, lang === 'en' ? 980 : canvas.width / 2, 560);
+        ctx.fillText('Booth ' + booth, 980, 560);
       }
     }
   </script>
 </body>
 </html>
+
