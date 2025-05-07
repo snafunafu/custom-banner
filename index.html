@@ -34,4 +34,118 @@
     const sets = [
       { name: 'CPHI', font: 'Poppins', base: 'cphi' },
       { name: 'bioLIVE', font: 'Poppins', base: 'bio' },
-      { name: 'PMEC', font:
+      { name: 'PMEC', font: 'Poppins', base: 'pmec' },
+      { name: 'Hi Korea', font: '"Nunito Sans"', base: 'hi' }
+    ];
+
+    const previewContainer = document.getElementById('previewContainer');
+    let loadedImages = [];
+
+    window.onload = async function () {
+      sets.forEach((set, i) => {
+        previewContainer.innerHTML += `
+          <div class="preview-box">
+            <h3>${set.name} (728x90)<a id="downloadLink${i*4+1}">Download</a></h3>
+            <canvas class="wide" id="canvas${i*4+1}" width="728" height="90"></canvas>
+          </div>
+          <div class="preview-box">
+            <h3>${set.name} (1080x1080)<a id="downloadLink${i*4+2}">Download</a></h3>
+            <canvas class="square" id="canvas${i*4+2}" width="1080" height="1080"></canvas>
+          </div>
+          <div class="preview-box">
+            <h3>${set.name} 국문 (728x90)<a id="downloadLink${i*4+3}">Download</a></h3>
+            <canvas class="wide" id="canvas${i*4+3}" width="728" height="90"></canvas>
+          </div>
+          <div class="preview-box">
+            <h3>${set.name} 국문 (1080x1080)<a id="downloadLink${i*4+4}">Download</a></h3>
+            <canvas class="square" id="canvas${i*4+4}" width="1080" height="1080"></canvas>
+          </div>
+        `;
+      });
+
+      loadedImages = await Promise.all(
+        sets.flatMap(set => [
+          loadImage(set.base + '-banner2-en.png'),
+          loadImage(set.base + '-banner1-en.png'),
+          loadImage(set.base + '-banner2-kr.png'),
+          loadImage(set.base + '-banner1-kr.png')
+        ])
+      );
+
+      loadedImages.forEach((img, i) => {
+        const canvas = document.getElementById('canvas' + (i + 1));
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      });
+    };
+
+    function loadImage(src) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = src;
+        img.onload = () => resolve(img);
+      });
+    }
+
+    async function generateBanners() {
+      const booth = document.getElementById("boothInput").value;
+      if (!booth) {
+        alert("부스 번호를 입력해주세요!");
+        return;
+      }
+
+      await document.fonts.ready;
+
+      sets.forEach((set, i) => {
+        const enWide = document.getElementById('canvas' + (i * 4 + 1));
+        const enSquare = document.getElementById('canvas' + (i * 4 + 2));
+        const krWide = document.getElementById('canvas' + (i * 4 + 3));
+        const krSquare = document.getElementById('canvas' + (i * 4 + 4));
+        const font = set.font;
+
+        drawWide(enWide, "en", booth, font, loadedImages[i * 4 + 0]);
+        drawSquare(enSquare, "en", booth, font, loadedImages[i * 4 + 1]);
+        drawWide(krWide, "kr", booth, "'Noto Sans KR'", loadedImages[i * 4 + 2]);
+        drawSquare(krSquare, "kr", booth, "'Noto Sans KR'", loadedImages[i * 4 + 3]);
+
+        for (let j = 1; j <= 4; j++) {
+          const canvas = document.getElementById('canvas' + (i * 4 + j));
+          const link = document.getElementById('downloadLink' + (i * 4 + j));
+          link.href = canvas.toDataURL();
+          link.download = set.base + '-' + j + '.png';
+          link.style.display = 'inline';
+        }
+      });
+    }
+
+    function drawWide(canvas, lang, booth, font, bgImg) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `700 20px ${font}`;
+      ctx.fillText(lang === 'en' ? "Visit our booth at" : "부스를 방문해주세요!", canvas.width / 2, 30);
+      ctx.font = `700 30px ${font}`;
+      ctx.fillText(booth, canvas.width / 2, 65);
+    }
+
+    function drawSquare(canvas, lang, booth, font, bgImg) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#FFFFFF";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.font = `700 80px ${font}`;
+      ctx.fillText(lang === 'en' ? "Visit us" : "방문해주세요!", 980, 440);
+      if (lang === 'en') {
+        ctx.font = `700 100px ${font}`;
+        ctx.fillText("Booth " + booth, 980, 560);
+      }
+    }
+  </script>
+</body>
+</html>
