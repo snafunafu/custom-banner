@@ -60,7 +60,7 @@
 </head>
 <body>
   <h1>Download Your Booth Banners (KR + EN)</h1>
-  <input type="text" id="boothInput" placeholder="부스 번호 입력" style="padding:10px; font-size:16px;">
+  <input type="text" id="boothInput" placeholder="Input Booth Number" style="padding:10px; font-size:16px;">
   <br><br>
   <button onclick="generateBanners()" style="padding:10px 20px; font-size:16px;">Generate All Banners</button>
   <div id="container"></div>
@@ -123,7 +123,7 @@
 
     async function generateBanners() {
       const booth = document.getElementById("boothInput").value;
-      if (!booth) return alert("부스 번호를 입력해주세요!");
+      if (!booth) return alert("Input your booth number!");
       await document.fonts.ready;
 
       sets.forEach((set, i) => {
