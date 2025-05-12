@@ -127,8 +127,8 @@
 
       sets.forEach((set, i) => {
         const baseIndex = i * 4;
-        const enFont = (set === 'hi') ? "Nunito Sans" : "Poppins";
-        const krBoothFont = (set === 'hi') ? "Nunito Sans" : "Poppins";
+        const fontEn = (set === 'hi') ? "Nunito Sans" : "Poppins";
+        const fontBoothKr = (set === 'hi') ? "Nunito Sans" : "Poppins";
 
         for (let j = 1; j <= 4; j++) {
           const canvasId = 'canvas' + (baseIndex + j);
@@ -139,10 +139,10 @@
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
 
-        drawWide(document.getElementById('canvas' + (baseIndex + 1)), booth, enFont, 'en');
-        drawSquare(document.getElementById('canvas' + (baseIndex + 2)), booth, enFont, 'en', set);
-        drawWide(document.getElementById('canvas' + (baseIndex + 3)), booth, krBoothFont, 'kr');
-        drawSquare(document.getElementById('canvas' + (baseIndex + 4)), booth, krBoothFont, 'kr', set);
+        drawWide(document.getElementById('canvas' + (baseIndex + 1)), booth, fontEn, 'en');
+        drawSquare(document.getElementById('canvas' + (baseIndex + 2)), booth, fontEn, 'en', set);
+        drawWide(document.getElementById('canvas' + (baseIndex + 3)), booth, fontBoothKr, 'kr');
+        drawSquare(document.getElementById('canvas' + (baseIndex + 4)), booth, fontBoothKr, 'kr', set);
 
         for (let j = 1; j <= 4; j++) {
           const canvas = document.getElementById('canvas' + (baseIndex + j));
@@ -177,10 +177,10 @@
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = '#FFFFFF';
       ctx.textBaseline = 'middle';
-      const boothFont = (lang === 'kr') ? (set === 'hi' ? "Nunito Sans" : "Poppins") : font;
-      const labelFont = (lang === 'kr') ? "Noto Sans KR" : font;
-      const label = (lang === 'kr') ? '방문해주세요!' : 'Visit us';
+      const label = "Visit us";
       const boothText = `Booth ${booth}`;
+      const labelFont = (set === 'hi') ? "Nunito Sans" : "Poppins";
+      const boothFont = (set === 'hi') ? "Nunito Sans" : "Poppins";
 
       if (set === 'hi') {
         ctx.textAlign = 'left';
