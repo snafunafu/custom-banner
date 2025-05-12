@@ -127,7 +127,8 @@
 
       sets.forEach((set, i) => {
         const baseIndex = i * 4;
-        const font = (set === 'hi') ? "Nunito Sans" : "Poppins";
+        const enFont = (set === 'hi') ? "Nunito Sans" : "Poppins";
+        const krBoothFont = (set === 'hi') ? "Nunito Sans" : "Poppins";
 
         for (let j = 1; j <= 4; j++) {
           const canvasId = 'canvas' + (baseIndex + j);
@@ -138,10 +139,10 @@
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
 
-        drawWide(document.getElementById('canvas' + (baseIndex + 1)), booth, font, 'en');
-        drawSquare(document.getElementById('canvas' + (baseIndex + 2)), booth, font, set);
-        drawWide(document.getElementById('canvas' + (baseIndex + 3)), booth, "Noto Sans KR", 'kr');
-        drawSquare(document.getElementById('canvas' + (baseIndex + 4)), booth, "Noto Sans KR", set);
+        drawWide(document.getElementById('canvas' + (baseIndex + 1)), booth, enFont, 'en');
+        drawSquare(document.getElementById('canvas' + (baseIndex + 2)), booth, enFont, 'en', set);
+        drawWide(document.getElementById('canvas' + (baseIndex + 3)), booth, krBoothFont, 'kr');
+        drawSquare(document.getElementById('canvas' + (baseIndex + 4)), booth, krBoothFont, 'kr', set);
 
         for (let j = 1; j <= 4; j++) {
           const canvas = document.getElementById('canvas' + (baseIndex + j));
@@ -158,39 +159,49 @@
       ctx.fillStyle = '#FFFFFF';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = `700 20px "${font}"`;
-      ctx.fillText(lang === 'kr' ? '부스를 방문해주세요!' : 'Visit our booth at', canvas.width / 2, 30);
-      ctx.font = `700 30px "${font}"`;
-      ctx.fillText(booth, canvas.width / 2, 65);
+
+      if (lang === 'kr') {
+        ctx.font = `700 20px "Noto Sans KR"`;
+        ctx.fillText('부스를 방문해주세요!', canvas.width / 2, 30);
+        ctx.font = `700 30px "${font}"`;
+        ctx.fillText(`Booth ${booth}`, canvas.width / 2, 65);
+      } else {
+        ctx.font = `700 20px "${font}"`;
+        ctx.fillText('Visit our booth at', canvas.width / 2, 30);
+        ctx.font = `700 30px "${font}"`;
+        ctx.fillText(booth, canvas.width / 2, 65);
+      }
     }
 
-    function drawSquare(canvas, booth, font, set) {
+    function drawSquare(canvas, booth, font, lang, set) {
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = '#FFFFFF';
       ctx.textBaseline = 'middle';
+      const boothFont = (lang === 'kr') ? (set === 'hi' ? "Nunito Sans" : "Poppins") : font;
+      const labelFont = (lang === 'kr') ? "Noto Sans KR" : font;
+      const label = (lang === 'kr') ? '방문해주세요!' : 'Visit us';
+      const boothText = `Booth ${booth}`;
 
       if (set === 'hi') {
         ctx.textAlign = 'left';
-        ctx.font = `700 90px "${font}"`;
-        ctx.fillText('Visit us', 75, 140);
-        ctx.font = `700 120px "${font}"`;
-        ctx.fillText('Booth ' + booth, 75, 245);
+        ctx.font = `700 90px "${labelFont}"`;
+        ctx.fillText(label, 75, 140);
+        ctx.font = `700 120px "${boothFont}"`;
+        ctx.fillText(boothText, 75, 245);
       } else if (set === 'bio') {
         ctx.textAlign = 'right';
-        ctx.font = `700 80px "${font}"`;
-        ctx.fillText('Visit us', 980, 400);
-        ctx.font = `700 100px "${font}"`;
-        ctx.fillText('Booth ' + booth, 980, 500);
+        ctx.font = `700 80px "${labelFont}"`;
+        ctx.fillText(label, 980, 400);
+        ctx.font = `700 100px "${boothFont}"`;
+        ctx.fillText(boothText, 980, 500);
       } else {
         ctx.textAlign = 'right';
-        ctx.font = `700 80px "${font}"`;
-        ctx.fillText('Visit us', 980, 440);
-        ctx.font = `700 100px "${font}"`;
-        ctx.fillText('Booth ' + booth, 980, 560);
+        ctx.font = `700 80px "${labelFont}"`;
+        ctx.fillText(label, 980, 440);
+        ctx.font = `700 100px "${boothFont}"`;
+        ctx.fillText(boothText, 980, 560);
       }
     }
   </script>
 </body>
 </html>
-
-
