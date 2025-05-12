@@ -67,7 +67,6 @@
 
   <script>
     const sets = ["cphi", "bio", "pmec", "hi"];
-    const fonts = ["Poppins", "Poppins", "Poppins", "Nunito Sans"];
     let allImages = [];
 
     function createCanvasSet(index, name) {
@@ -128,7 +127,7 @@
 
       sets.forEach((set, i) => {
         const baseIndex = i * 4;
-        const font = fonts[i];
+        const font = (set === 'hi') ? "'Nunito Sans'" : "'Poppins'";
 
         for (let j = 1; j <= 4; j++) {
           const canvasId = 'canvas' + (baseIndex + j);
