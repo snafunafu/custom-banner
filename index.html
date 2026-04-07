@@ -66,14 +66,13 @@
   <div id="container"></div>
 
   <script>
-    const sets = ["cphi", "pmec", "hi"];
+    const sets = ["cphi", "hi"];
     let allImages = [];
 
     function createCanvasSet(index, name) {
       const container = document.getElementById('container');
       const displayName =
         name === "CPHI" ? "CPHI Korea" :
-        name === "PMEC" ? "PMEC Korea" :
         name === "HI" ? "Hi Korea" : name;
 
       const html = `
@@ -137,7 +136,6 @@
         const font = (set === 'hi') ? "Nunito Sans" : "Poppins";
         const displayName =
           set === 'cphi' ? 'CPHI-Korea' :
-          set === 'pmec' ? 'PMEC-Korea' :
           set === 'hi' ? 'Hi-Korea' : set;
 
         for (let j = 1; j <= 4; j++) {
@@ -199,14 +197,7 @@
         ctx.fillText(label, 75, 140);
         ctx.font = `700 120px "${boothFont}"`;
         ctx.fillText(boothText, 75, 245);
-      } else if (set === 'bio') {
-        // bio는 제거되었으므로 이 조건문은 사실상 무시됨
-        ctx.textAlign = 'right';
-        ctx.font = `700 80px "${labelFont}"`;
-        ctx.fillText(label, 980, 400);
-        ctx.font = `700 100px "${boothFont}"`;
-        ctx.fillText(boothText, 980, 500);
-      } else {
+     else {
         ctx.textAlign = 'right';
         ctx.font = `700 80px "${labelFont}"`;
         ctx.fillText(label, 980, 440);
